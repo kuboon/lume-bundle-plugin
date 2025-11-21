@@ -34,7 +34,8 @@ export function bundle(userOptions?: Options) {
   const options = merge(defaults, userOptions);
 
   return (site: Site) => {
-    const basePath = site.src();
+    const srcBasePath = site.src();
+    const urlBasePath = site.options.location.pathname;
 
     async function runBundle(
       pages: Page[],
@@ -53,7 +54,7 @@ export function bundle(userOptions?: Options) {
         write: false,
         entrypoints,
         sourcemap,
-        outputDir: basePath,
+        outputDir: urlBasePath,
       };
       const { outputFiles, warnings, errors } = await Deno.bundle(
         buildOptions,
